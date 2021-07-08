@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TopicCreate;
+use App\Http\Requests\TopicCreateRequest;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Topic;
 use Illuminate\Support\Facades\Auth;
@@ -15,14 +18,14 @@ class TopicController extends Controller
      */
     public function index()
     {
-        $topics = Topic::where('user_id', Auth::user()->id)->paginate(5);
+        $topics = Topic::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(5);
 
         return view('topics.dashboard', compact('topics'));
     }
 
     public function review()
     {
-        $topics = Topic::where('status', 'pending')->paginate(5);
+        $topics = Topic::where('status', 'pending')->orderBy('created_at', 'desc')->paginate(5);
 
         return view('topics.review', compact('topics'));
     }
@@ -34,7 +37,9 @@ class TopicController extends Controller
      */
     public function create()
     {
-        return view('topics.create');
+        $categories = Category::get();
+
+        return view('topics.create', compact('categories'));
     }
 
     /**
@@ -43,9 +48,28 @@ class TopicController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TopicCreateRequest $request)
     {
-        //
+        $category = Category::where('id', '=', $request->category)->first();
+        if ($category === null) {
+            return back()
+                ->with('error', 'Invalid category, try again.');
+        }
+
+        $photo = time() . '.' . $request->photo->getClientOriginalExtension();
+        $request->photo->move(public_path('photos'), $photo);
+
+        $topic = new Topic();
+        $topic->user_id = Auth::user()->id;
+
+        $topic->title = $request->title;
+        $topic->photo = $photo;
+        $topic->description = $request->description;
+        $topic->category_id = $request->category;
+        $topic->save();
+
+        return back()
+            ->with('success', 'Topic successfully created! It needs to be approved before you dig into it though!');
     }
 
     /**

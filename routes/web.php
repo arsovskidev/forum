@@ -19,8 +19,10 @@ use App\Http\Controllers\TopicController;
 
 
 Route::get('/',                     [HomeController::class, 'index'])->name('home.index');
+
 Route::get('/topics/dashboard',     [TopicController::class, 'index'])->middleware('auth')->name('topics.dashboard');
 Route::get('/topics/create',        [TopicController::class, 'create'])->middleware('auth')->name('topics.create');
+Route::post('/topics/create',       [TopicController::class, 'store'])->middleware('auth')->name('topics.store');
 
 Route::get('/topics/review',        [TopicController::class, 'review'])->middleware('admin')->name('topics.review');
 
