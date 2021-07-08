@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Topic;
+use Illuminate\Support\Facades\Auth;
 
 class TopicController extends Controller
 {
@@ -13,12 +15,16 @@ class TopicController extends Controller
      */
     public function index()
     {
-        return view('topics.dashboard');
+        $topics = Topic::where('user_id', Auth::user()->id)->paginate(5);
+
+        return view('topics.dashboard', compact('topics'));
     }
 
     public function review()
     {
-        return view('topics.review');
+        $topics = Topic::where('status', 'pending')->paginate(5);
+
+        return view('topics.review', compact('topics'));
     }
 
     /**
