@@ -16,10 +16,11 @@ class RolesSeeder extends Seeder
     {
         $member = new Role();
         $member->type = 'member';
-        $member->save();
 
         $admin = new Role();
         $admin->type = 'admin';
+
+        $member->save();
         $admin->save();
     }
 }

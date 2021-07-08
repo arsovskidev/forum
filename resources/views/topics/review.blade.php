@@ -8,10 +8,14 @@
                 {{-- Session Logs --}}
                 <div>
                     @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        <div class="alert alert-danger">
+                            <strong>{{ session('error') }}</strong>
+                        </div>
                     @endif
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">
+                            <strong>{{ session('success') }}</strong>
+                        </div>
                     @endif
                 </div>
                 <div class="card">
@@ -30,7 +34,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2 my-auto">
-                                                <img class="w-100" src="{{ asset('/photos/' . $topic->photo) }}"
+                                                <img class="img-thumbnail" src="{{ asset('/photos/' . $topic->photo) }}"
                                                     alt="Topic's Image">
                                             </div>
                                             <div class="col-md-6 my-4 my-md-auto">
@@ -40,11 +44,14 @@
                                                 <p class="card-text">
                                                     {{ \Illuminate\Support\Str::limit($topic->description, 100, $end = '...') }}
                                                 </p>
+                                                <span class="badge badge-secondary">
+                                                    Comments {{ $topic->comments->count() }}
+                                                </span>
                                             </div>
                                             <div class="col-md-4 my-auto">
                                                 <p class="text-right">
                                                     {{ ucfirst($topic->category->name) }} |
-                                                    {{ $topic->user->name }}
+                                                    {{ $topic->user->username }}
                                                 </p>
                                                 <div class="float-right">
                                                     <a href="{{ route('topics.show', $topic->id) }}"

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,10 +18,11 @@ use App\Http\Controllers\TopicController;
 |
 */
 
-
+// Home
 Route::get('/',                                     [HomeController::class, 'index'])->name('home.index');
 Route::get('/topic/{id}',                           [TopicController::class, 'show'])->name('topics.show');
 
+// Topics
 Route::get('/topics/dashboard',                     [TopicController::class, 'index'])->middleware('auth')->name('topics.dashboard');
 Route::get('/topics/create',                        [TopicController::class, 'create'])->middleware('auth')->name('topics.create');
 Route::get('/topics/delete/{id}',                   [TopicController::class, 'destroy'])->middleware('auth')->name('topics.destroy');
@@ -29,6 +31,10 @@ Route::get('/topics/edit/{id}',                     [TopicController::class, 'ed
 Route::post('/topics/create',                       [TopicController::class, 'store'])->middleware('auth')->name('topics.store');
 Route::post('/topics/update/{id}',                  [TopicController::class, 'update'])->middleware('auth')->name('topics.update');
 
+// Comments
+Route::post('/comment/{id}',                        [CommentController::class, 'store'])->middleware('auth')->name('comment.store');
+
+// Admin
 Route::get('/topics/review',                        [TopicController::class, 'review'])->middleware('admin')->name('topics.review');
 Route::get('/topics/review/approve/{id}',           [TopicController::class, 'approve'])->middleware('admin')->name('topics.approve');
 Route::get('/topics/review/refuse/{id}',            [TopicController::class, 'refuse'])->middleware('admin')->name('topics.refuse');

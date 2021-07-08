@@ -17,17 +17,18 @@ class UsersSeeder extends Seeder
     public function run()
     {
         $admin = new User();
-        $admin->name = 'Filip Arsovski';
+        $admin->username = 'admin';
         $admin->email = 'admin@example.com';
         $admin->password = Hash::make('admin');
         $admin->role_id = Role::where('type', 'admin')->first()->id;
-        $admin->save();
 
         $member = new User();
-        $member->name = 'John Doe';
+        $member->username = 'member';
         $member->email = 'member@example.com';
         $member->password = Hash::make('member');
         $member->role_id = Role::where('type', 'member')->first()->id;
+
+        $admin->save();
         $member->save();
     }
 }

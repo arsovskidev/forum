@@ -8,20 +8,21 @@
                 {{-- Session Logs --}}
                 <div>
                     @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        <div class="alert alert-danger">
+                            <strong>{{ session('error') }}</strong>
+                        </div>
                     @endif
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">
+                            <strong>{{ session('success') }}</strong>
+                        </div>
                     @endif
                 </div>
                 {{-- Error Logs --}}
                 <div>
-                    @if (count($errors) > 0)
+                    @if ($errors->count())
                         <div class="alert alert-danger">
                             <strong>Whoops!</strong>
-                            There were some problems with your input, please correct them and submit again.
-                            <br>
-                            <br>
                             @foreach ($errors->all() as $error)
                                 <p class="m-0 p-0">{{ $error }}</p>
                             @endforeach
@@ -75,6 +76,7 @@
                                             @endif
                                         </select>
                                     </div>
+                                    <hr>
                                     <div class="text-center">
                                         <button type="submit" class="btn btn-purple">Submit for review</button>
                                     </div>

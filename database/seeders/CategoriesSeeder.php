@@ -16,14 +16,19 @@ class CategoriesSeeder extends Seeder
     {
         $general = new Category();
         $general->name = 'general';
+
         $entertainment = new Category();
         $entertainment->name = 'entertainment';
+
         $sports = new Category();
         $sports->name = 'sports';
+
         $movies = new Category();
         $movies->name = 'movies';
+
         $politics = new Category();
         $politics->name = 'politics';
+
         $cars = new Category();
         $cars->name = 'cars';
 

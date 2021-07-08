@@ -2,16 +2,19 @@
 
 @section('content')
     <div class="container">
-
         <div class="row justify-content-center">
             <div class="col-md-10">
                 {{-- Session Logs --}}
                 <div>
                     @if (session('error'))
-                        <div class="alert alert-danger">{{ session('error') }}</div>
+                        <div class="alert alert-danger">
+                            <strong>{{ session('error') }}</strong>
+                        </div>
                     @endif
                     @if (session('success'))
-                        <div class="alert alert-success">{{ session('success') }}</div>
+                        <div class="alert alert-success">
+                            <strong>{{ session('success') }}</strong>
+                        </div>
                     @endif
                 </div>
                 <div class="card">
@@ -50,11 +53,14 @@
                                                 <p class="card-text">
                                                     {{ \Illuminate\Support\Str::limit($topic->description, 100, $end = '...') }}
                                                 </p>
+                                                <span class="badge badge-secondary">
+                                                    Comments {{ $topic->comments->count() }}
+                                                </span>
                                             </div>
                                             <div class="col-md-4 my-auto">
                                                 <p class="text-right">
                                                     {{ ucfirst($topic->category->name) }} |
-                                                    {{ $topic->user->name }}
+                                                    {{ $topic->user->username }}
                                                 </p>
                                                 <div class="float-right">
                                                     <a href="{{ route('topics.show', $topic->id) }}"
@@ -63,7 +69,10 @@
                                                     </a>
                                                     @auth
                                                         @if (Auth::user()->role->type == 'admin' || Auth::user()->id == $topic->user->id)
-                                                            <a href="#" class="btn btn-sm btn-purple">Edit</a>
+                                                            <a href="{{ route('topics.edit', $topic->id) }}"
+                                                                class="btn btn-sm btn-purple">
+                                                                Edit
+                                                            </a>
                                                             <a href="{{ route('topics.destroy', $topic->id) }}"
                                                                 class="btn btn-sm btn-dark">
                                                                 Delete
@@ -72,9 +81,9 @@
                                                     @endauth
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
+                                </div>
                             @endforeach
                         @else
                             <p class="m-0">There is no topics available</p>
