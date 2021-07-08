@@ -45,9 +45,9 @@
                         <hr>
                         <h4 class="my-4">{{ $topic->description }} - {{ $topic->user->username }}</h4>
                         <div class="text-right">
-                            <small class="text-mute">{{ ucfirst($topic->category->name) }}</small>
+                            <small class="text-muted">{{ ucfirst($topic->category->name) }}</small>
                             <br>
-                            <small class="text-mute">{{ $topic->created_at }}</small>
+                            <small class="text-muted">{{ $topic->created_at }}</small>
                             <br>
                         </div>
                         <hr>
@@ -82,7 +82,7 @@
                                                         <p>
                                                             {{ $comment->content }}
                                                         </p>
-                                                        <small class="text-mute float-right">
+                                                        <small class="text-muted float-right">
                                                             {{ $comment->created_at }}
                                                         </small>
                                                     </div>

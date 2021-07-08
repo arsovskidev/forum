@@ -26,7 +26,7 @@ class TopicCreateRequest extends FormRequest
     {
         return [
             'title' => 'required|max:255',
-            'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'photo' => 'required|file|image|max:2048',
             'description' => 'required',
             'category' => 'required|integer',
         ];

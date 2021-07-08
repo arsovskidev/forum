@@ -52,7 +52,9 @@
                                     <div class="form-group">
                                         <label for="photo">Photo</label>
                                         <input type="file" class="form-control-file" id="photo" name="photo">
-                                        <small class="text-mute">If left empty, the old photo will remain.</small>
+                                        <small class="text-muted">Max photo size is 2MB.</small>
+                                        <br>
+                                        <small class="text-muted">If left empty, the old photo will remain.</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Description</label>

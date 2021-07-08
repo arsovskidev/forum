@@ -51,6 +51,7 @@
                                     <div class="form-group">
                                         <label for="photo">Photo</label>
                                         <input type="file" class="form-control-file" id="photo" name="photo">
+                                        <small class="text-muted">Max photo size is 2MB.</small>
                                     </div>
                                     <div class="form-group">
                                         <label for="description">Description</label>
@@ -65,9 +66,15 @@
                                                     Select category...
                                                 </option>
                                                 @foreach ($categories as $category)
-                                                    <option value="{{ $category->id }}">
-                                                        {{ ucfirst($category->name) }}
-                                                    </option>
+                                                    @if (old('category') == $category->id)
+                                                        <option value="{{ $category->id }}" selected="selected">
+                                                            {{ ucfirst($category->name) }}
+                                                        </option>
+                                                    @else
+                                                        <option value="{{ $category->id }}">
+                                                            {{ ucfirst($category->name) }}
+                                                        </option>
+                                                    @endif
                                                 @endforeach
                                             @else
                                                 <option selected="selected" disabled>
