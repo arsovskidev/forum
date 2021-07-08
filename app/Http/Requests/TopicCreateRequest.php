@@ -25,7 +25,7 @@ class TopicCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required',
+            'title' => 'required|max:255',
             'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'description' => 'required',
             'category' => 'required|integer',

@@ -68,7 +68,8 @@ class TopicController extends Controller
         $topic->category_id = $request->category;
         $topic->save();
 
-        return back()
+        return redirect()
+            ->route('topics.dashboard')
             ->with('success', 'Topic successfully created! It needs to be approved before you dig into it though!');
     }
 
@@ -114,6 +115,49 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $topic = Topic::where('id', '=', $id)->first();
+        if ($topic === null) {
+            return back()
+                ->with('error', 'The topic does not exist, or it has been already deleted.');
+        }
+        if (Auth::user()->role->type != 'admin' || Auth::user()->id != $topic->user->id) {
+            return back()
+                ->with('error', 'You don\'t have rights to delete this topic.');
+        }
+
+        $topic->delete();
+
+        return back()
+            ->with('success', 'The topic was successfully deleted.');
+    }
+
+    public function approve($id)
+    {
+        $topic = Topic::where('id', '=', $id)->first();
+        if ($topic === null) {
+            return back()
+                ->with('error', 'The topic does not exist, or it has been deleted.');
+        }
+
+        $topic->status = 'approved';
+        $topic->save();
+
+        return back()
+            ->with('success', 'The topic was successfully approved.');
+    }
+
+    public function refuse($id)
+    {
+        $topic = Topic::where('id', '=', $id)->first();
+        if ($topic === null) {
+            return back()
+                ->with('error', 'The topic does not exist, or it has been deleted.');
+        }
+
+        $topic->status = 'refused';
+        $topic->save();
+
+        return back()
+            ->with('success', 'The topic was refused.');
     }
 }

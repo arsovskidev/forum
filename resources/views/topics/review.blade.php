@@ -29,7 +29,7 @@
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 my-auto">
                                                 <img class="w-100" src="{{ asset('/photos/' . $topic->photo) }}"
                                                     alt="Topic's Image">
                                             </div>
@@ -38,7 +38,7 @@
                                                     {{ $topic->title }}
                                                 </h5>
                                                 <p class="card-text">
-                                                    {{ $topic->description }}
+                                                    {{ \Illuminate\Support\Str::limit($topic->description, 100, $end = '...') }}
                                                 </p>
                                             </div>
                                             <div class="col-md-4 my-auto">
@@ -47,8 +47,14 @@
                                                     {{ $topic->user->name }}
                                                 </p>
                                                 <div class="float-right">
-                                                    <a href="#" class="btn btn-sm btn-dark">Approve</a>
-                                                    <a href="#" class="btn btn-sm btn-purple">Delete</a>
+                                                    <a href="{{ route('topics.approve', $topic->id) }}"
+                                                        class="btn btn-sm btn-purple">
+                                                        Approve
+                                                    </a>
+                                                    <a href="{{ route('topics.refuse', $topic->id) }}"
+                                                        class="btn btn-sm btn-dark">
+                                                        Refuse
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>

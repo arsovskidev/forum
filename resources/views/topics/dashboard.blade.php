@@ -29,7 +29,7 @@
                                 <div class="card mb-4">
                                     <div class="card-body">
                                         <div class="row">
-                                            <div class="col-md-2">
+                                            <div class="col-md-2 my-auto">
                                                 <img class="w-100" src="{{ asset('/photos/' . $topic->photo) }}"
                                                     alt="Topic's Image">
                                             </div>
@@ -38,7 +38,7 @@
                                                     {{ $topic->title }}
                                                 </h5>
                                                 <p class="card-text">
-                                                    {{ $topic->description }}
+                                                    {{ \Illuminate\Support\Str::limit($topic->description, 100, $end = '...') }}
                                                 </p>
                                                 @switch($topic->status)
                                                     @case('approved')
@@ -64,7 +64,10 @@
                                                     {{ $topic->user->name }}
                                                 </p>
                                                 <div class="float-right">
-                                                    <a href="#" class="btn btn-sm btn-dark">Delete</a>
+                                                    <a href="{{ route('topics.destroy', $topic->id) }}"
+                                                        class="btn btn-sm btn-dark">
+                                                        Delete
+                                                    </a>
                                                     <a href="#" class="btn btn-sm btn-purple">Edit</a>
                                                 </div>
                                             </div>
