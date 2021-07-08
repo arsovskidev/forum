@@ -16,10 +16,10 @@
                 </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <p class="m-0 p-0">{{ __('My Topics') }}</p>
+                        <p class="m-0">My Topics</p>
                         <div>
-                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-danger">
-                                {{ __('Back') }}
+                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-dark">
+                                Back
                             </a>
                         </div>
                     </div>
@@ -64,11 +64,15 @@
                                                     {{ $topic->user->name }}
                                                 </p>
                                                 <div class="float-right">
+                                                    <a href="{{ route('topics.show', $topic->id) }}"
+                                                        class="btn btn-sm btn-purple">
+                                                        Read More
+                                                    </a>
+                                                    <a href="#" class="btn btn-sm btn-purple">Edit</a>
                                                     <a href="{{ route('topics.destroy', $topic->id) }}"
                                                         class="btn btn-sm btn-dark">
                                                         Delete
                                                     </a>
-                                                    <a href="#" class="btn btn-sm btn-purple">Edit</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -76,7 +80,12 @@
                                 </div>
                             @endforeach
                         @else
-                            {{ __('It appears that you don\'t have any topics created. Go create one right now!') }}
+                            <p class="m-0">It appears that you don't have any topics created.
+                                <a href="{{ route('topics.create') }}">Go create one right now!
+                                </a>
+                            </p>
+
+
                         @endif
                         <div class="d-flex justify-content-center">
                             {!! $topics->links('pagination::bootstrap-4') !!}

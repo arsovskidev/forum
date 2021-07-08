@@ -50,7 +50,7 @@ class TopicController extends Controller
      */
     public function store(TopicCreateRequest $request)
     {
-        $category = Category::where('id', '=', $request->category)->first();
+        $category = Category::where('id', $request->category)->first();
         if ($category === null) {
             return back()
                 ->with('error', 'Invalid category, try again.');
@@ -81,7 +81,27 @@ class TopicController extends Controller
      */
     public function show($id)
     {
-        //
+        $topic = Topic::where('id', $id)->first();
+
+        if ($topic === null) {
+            return back()
+                ->with('error', 'The topic does not exist, or it has been deleted.');
+        }
+
+        if ($topic->status === 'pending' || $topic->status === 'refused') {
+            if (!Auth::check()) {
+                return redirect()
+                    ->route('home.index')
+                    ->with('error', 'Please login to see not approved topics.');
+            }
+            if (Auth::user()->role->type != 'admin' && Auth::user()->id != $topic->user->id) {
+                return redirect()
+                    ->route('home.index')
+                    ->with('error', 'This topic has not been approved by administrator yet.');
+            }
+        }
+
+        return view('topics.details', compact('topic'));
     }
 
     /**
@@ -115,12 +135,12 @@ class TopicController extends Controller
      */
     public function destroy($id)
     {
-        $topic = Topic::where('id', '=', $id)->first();
+        $topic = Topic::where('id', $id)->first();
         if ($topic === null) {
             return back()
                 ->with('error', 'The topic does not exist, or it has been already deleted.');
         }
-        if (Auth::user()->role->type != 'admin' || Auth::user()->id != $topic->user->id) {
+        if (Auth::user()->role->type != 'admin' && Auth::user()->id != $topic->user->id) {
             return back()
                 ->with('error', 'You don\'t have rights to delete this topic.');
         }
@@ -133,7 +153,7 @@ class TopicController extends Controller
 
     public function approve($id)
     {
-        $topic = Topic::where('id', '=', $id)->first();
+        $topic = Topic::where('id', $id)->first();
         if ($topic === null) {
             return back()
                 ->with('error', 'The topic does not exist, or it has been deleted.');
@@ -148,7 +168,7 @@ class TopicController extends Controller
 
     public function refuse($id)
     {
-        $topic = Topic::where('id', '=', $id)->first();
+        $topic = Topic::where('id', $id)->first();
         if ($topic === null) {
             return back()
                 ->with('error', 'The topic does not exist, or it has been deleted.');

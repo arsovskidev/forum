@@ -30,10 +30,10 @@
                 </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <p class="m-0 p-0">{{ __('Create Topic') }}</p>
+                        <p class="m-0">Create Topic</p>
                         <div>
-                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-danger">
-                                {{ __('Back') }}
+                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-dark">
+                                Back
                             </a>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                                         <label for="photo">Photo</label>
                                         <input type="file" class="form-control-file" id="photo" name="photo">
                                     </div>
-                                    <div class=" form-group">
+                                    <div class="form-group">
                                         <label for="description">Description</label>
                                         <textarea class="form-control" rows="2" id="description"
                                             name="description">{{ old('description') }}</textarea>

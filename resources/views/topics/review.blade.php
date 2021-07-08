@@ -16,10 +16,10 @@
                 </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <p class="m-0 p-0">{{ __('Review Topics') }}</p>
+                        <p class="m-0">Review Topics</p>
                         <div>
-                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-danger">
-                                {{ __('Back') }}
+                            <a href="{{ route('home.index') }}" class="btn btn-sm btn-dark">
+                                Back
                             </a>
                         </div>
                     </div>
@@ -47,6 +47,10 @@
                                                     {{ $topic->user->name }}
                                                 </p>
                                                 <div class="float-right">
+                                                    <a href="{{ route('topics.show', $topic->id) }}"
+                                                        class="btn btn-sm btn-purple">
+                                                        Read More
+                                                    </a>
                                                     <a href="{{ route('topics.approve', $topic->id) }}"
                                                         class="btn btn-sm btn-purple">
                                                         Approve
@@ -62,7 +66,7 @@
                                 </div>
                             @endforeach
                         @else
-                            {{ __('There is no topics available for review.') }}
+                            <p class="m-0">There is no topics available for review.</p>
                         @endif
                         <div class="d-flex justify-content-center">
                             {!! $topics->links('pagination::bootstrap-4') !!}

@@ -16,19 +16,19 @@
                 </div>
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
-                        <p class="m-0 p-0">{{ __('All Topics') }}</p>
+                        <p class="m-0">All Topics</p>
                         @auth
                             <div>
                                 @if (Auth::user()->role->type == 'admin')
                                     <a href="{{ route('topics.review') }}" class="btn btn-sm btn-purple">
-                                        {{ __('Review topics') }}
+                                        Review topics <span class="badge badge-light">{{ $pending_topics_count }}</span>
                                     </a>
                                 @endif
                                 <a href="{{ route('topics.create') }}" class="btn btn-sm btn-dark">
-                                    {{ __('Create new') }}
+                                    Create new
                                 </a>
                                 <a href="{{ route('topics.dashboard') }}" class="btn btn-sm btn-dark">
-                                    {{ __('My topics') }}
+                                    My topics
                                 </a>
                             </div>
                         @endauth
@@ -40,7 +40,7 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-2 my-auto">
-                                                <img class="w-100" src="{{ asset('/photos/' . $topic->photo) }}"
+                                                <img class="img-thumbnail" src="{{ asset('/photos/' . $topic->photo) }}"
                                                     alt="Topic's Image">
                                             </div>
                                             <div class="col-md-6 my-4 my-md-auto">
@@ -56,25 +56,28 @@
                                                     {{ ucfirst($topic->category->name) }} |
                                                     {{ $topic->user->name }}
                                                 </p>
-                                                @auth
-                                                    @if (Auth::user()->role->type == 'admin' || Auth::user()->id == $topic->user->id)
-                                                        <div class="float-right">
+                                                <div class="float-right">
+                                                    <a href="{{ route('topics.show', $topic->id) }}"
+                                                        class="btn btn-sm btn-purple">
+                                                        Read More
+                                                    </a>
+                                                    @auth
+                                                        @if (Auth::user()->role->type == 'admin' || Auth::user()->id == $topic->user->id)
+                                                            <a href="#" class="btn btn-sm btn-purple">Edit</a>
                                                             <a href="{{ route('topics.destroy', $topic->id) }}"
                                                                 class="btn btn-sm btn-dark">
                                                                 Delete
                                                             </a>
-                                                            <a href="#" class="btn btn-sm btn-purple">Edit</a>
-                                                        </div>
-                                                    @endif
-                                                @endauth
+                                                        @endif
+                                                    @endauth
+                                                </div>
                                             </div>
-                                        </div>
 
+                                        </div>
                                     </div>
-                                </div>
                             @endforeach
                         @else
-                            {{ __('There is no topics available.') }}
+                            <p class="m-0">There is no topics available</p>
                         @endif
                         <div class="d-flex justify-content-center">
                             {!! $topics->links('pagination::bootstrap-4') !!}
