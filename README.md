@@ -22,14 +22,12 @@ $ nano .env
 DB_DATABASE= YOUR_DATABASE_NAME
 DB_USERNAME= YOUR_MYSQL_USERNAME
 DB_PASSWORD= YOUR_MYSQL_PASSWORD
-
 ```
 
 ###### Migrate the database and seed it.
 
 ```
 $ php artisan migrate --seed
-
 ```
 
 ###### You are now done with setting up, go ahead and run the project!
